@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deploy
+  labels:
+    app: wordpress
+  namespace: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+        - name: wordpress
+          image: wordpress
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mysql-service
+            - name: WORDPRESS_DB_USER
+              value: jean-luc
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-secrets
+                  key: db_password
+            - name: WORDPRESS_DB_NAME
+              value: jl-db
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: wordpress-volume
+              mountPath: /var/www/html
+      volumes:
+        - name: wordpress-volume
+          nfs:
+            server: "10.103.78.205"
+            path: /wordpress

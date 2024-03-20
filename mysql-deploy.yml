@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+  labels:
+    app: mysql
+  namespace: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql
+        env:
+          - name: MYSQL_DATABASE
+            value: jl-db
+          - name: MYSQL_USER
+            value: jean-luc
+          - name: MYSQL_PASSWORD
+            valueFrom:
+                secretKeyRef:
+                  name: my-secrets
+                  key: db_password 
+          - name: MYSQL_RANDOM_ROOT_PASSWORD
+            value: "1"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: mysql-volume
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-volume
+          nfs:
+            server: "10.103.78.205"
+            path: /mysql

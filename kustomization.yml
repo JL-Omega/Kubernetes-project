@@ -1,0 +1,8 @@
+resources:
+  - ingress.yml
+  - mysql-deploy.yml
+  - mysql-service.yml
+  - mysql-wordpress-secrets.yml
+  - namespace.yml
+  - wordpress-deploy.yml
+  - wordpress-service.yml
