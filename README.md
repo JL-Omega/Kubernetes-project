@@ -67,3 +67,13 @@ This repository contains Kubernetes YAML manifests for deploying WordPress on ba
    kubectl apply -f ingress.yml
    kubectl apply -f metallb-ip-pool.yml
    kubectl apply -f metallb-l2-advertisement.yml
+
+## Notes
+- Adjust the IP address range in metallb-ip-pool.yml according to your network configuration.
+- Update hostname in ingress.yml to match your domain.
+- Ensure the NFS server IP and paths are correctly configured in volume mounts.
+- Secrets should be handled securely. In this example, base64 encoded passwords are used for demonstration purposes. Ensure to use a secure method for managing secrets in production.
+Feel free to modify the manifests according to your specific requirements.
+For any issues or questions, please raise them in the repository's issue tracker.
+---
+#### Note: This README assumes familiarity with Kubernetes concepts and YAML syntax. If you need assistance with Kubernetes basics or manifest understanding, refer to [LinkedIn](https://www.linkedin.com/in/jean-luc-mpande-75981a23b/)
