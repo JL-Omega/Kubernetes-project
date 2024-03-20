@@ -1,1 +1,69 @@
-# Kubernetes-project
+# WordPress Deployment on Bare-Metal (Ingress-controller + MetalLB)
+
+This repository contains Kubernetes YAML manifests for deploying WordPress on bare-metal infrastructure using an Ingress controller along with MetalLB for Load Balancing.
+
+## Prerequisites
+
+- Kubernetes cluster running on bare-metal servers.
+- Ingress controller deployed in the cluster (In this case, Nginx Ingress controller is used).
+- MetalLB installed in the cluster for Load Balancing.
+- NFS server for persistent storage.
+
+## Manifests Overview
+
+### Deployment Manifests
+
+#### WordPress Deployment (`wordpress-deploy.yml`)
+- Creates a Deployment for WordPress with a single replica.
+- Specifies container settings, environment variables for database connection, resource limits, ports, and volume mounts.
+
+#### MySQL Deployment (`mysql-deploy.yml`)
+- Defines a Deployment for MySQL database with a single replica.
+- Sets container configurations, environment variables for database settings, resource limits, ports, and volume mounts.
+
+### Service Manifests
+
+#### WordPress Service (`wordpress-service.yml`)
+- Creates a ClusterIP Service for WordPress to allow internal communication within the cluster.
+
+#### MySQL Service (`mysql-service.yml`)
+- Defines a ClusterIP Service for MySQL to enable internal communication within the cluster.
+
+### Ingress Manifest
+
+#### Ingress (`ingress.yml`)
+- Configures an Ingress resource to expose WordPress externally.
+- Specifies the hostname (`protem.com`) and backend service.
+
+### Secret Manifest
+
+#### Secrets (`mysql-wordpress-secrets.yml`)
+- Creates a Secret to store sensitive information like database passwords securely.
+
+### MetalLB Configuration
+
+#### MetalLB IP Address Pool (`metallb-ip-pool.yml`)
+- Defines an IP address pool for MetalLB to assign IP addresses from.
+
+#### MetalLB L2 Advertisement (`metallb-l2-advertisement.yml`)
+- Configures L2 advertisement for MetalLB.
+
+### Namespace Manifest
+
+#### Namespace (`namespace.yml`)
+- Creates a Kubernetes namespace named `wordpress` to isolate resources.
+
+## Installation
+
+1. Ensure the prerequisites are met.
+2. Apply the manifests in the following order:
+   ```bash
+   kubectl apply -f namespace.yml
+   kubectl apply -f mysql-deploy.yml
+   kubectl apply -f mysql-service.yml
+   kubectl apply -f mysql-wordpress-secrets.yml
+   kubectl apply -f wordpress-deploy.yml
+   kubectl apply -f wordpress-service.yml
+   kubectl apply -f ingress.yml
+   kubectl apply -f metallb-ip-pool.yml
+   kubectl apply -f metallb-l2-advertisement.yml
