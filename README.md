@@ -60,8 +60,8 @@ This repository contains Kubernetes YAML manifests for deploying WordPress on ba
 1. Ensure the prerequisites are met.
 2. Apply MetalLB configuration:
    ```bash
-   kubectl apply -f metallb-ip-pool.yml
-   kubectl apply -f metallb-l2-advertisement.yml
+   kubectl apply -f ipaddresspool.yml
+   
 3. Apply remaining manifests listed in **kustomize.yml**:
    ```bash
    kubectl apply -k .
