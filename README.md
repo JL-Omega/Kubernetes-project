@@ -3,6 +3,7 @@
 </h1>
 
 This repository contains Kubernetes YAML manifests for deploying WordPress on bare-metal infrastructure using an NGINX Ingress controller along with MetalLB for Load Balancing.
+---
 
 ## Prerequisites
 
