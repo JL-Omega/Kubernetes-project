@@ -1,7 +1,6 @@
 <h1 align="center">
   WordPress Deployment on k8s Bare-Metal <br>(NGINX Ingress Controller + MetalLB)
 </h1>
----
 This repository contains Kubernetes YAML manifests for deploying WordPress on bare-metal infrastructure using an NGINX Ingress controller along with MetalLB for Load Balancing.
 
 
@@ -59,17 +58,11 @@ This repository contains Kubernetes YAML manifests for deploying WordPress on ba
 ## Installation
 
 1. Ensure the prerequisites are met.
-2. Apply the manifests in the following order:
+2. Apply MetalLB configuration:
    ```bash
-   kubectl apply -f namespace.yml
-   kubectl apply -f mysql-deploy.yml
-   kubectl apply -f mysql-service.yml
-   kubectl apply -f mysql-wordpress-secrets.yml
-   kubectl apply -f wordpress-deploy.yml
-   kubectl apply -f wordpress-service.yml
-   kubectl apply -f ingress.yml
    kubectl apply -f metallb-ip-pool.yml
    kubectl apply -f metallb-l2-advertisement.yml
+
 
 ## Notes
 - Adjust the IP address range in metallb-ip-pool.yml according to your network configuration.
